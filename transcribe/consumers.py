@@ -22,36 +22,14 @@ class WebSocketTranscriptHandler(TranscriptResultStreamHandler):
 class TranscribeConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
-        # await self.send(text_data="🔊 Starting transcription...")
+        await self.send(text_data="🔊 Connected...")
 
-        file_path = "kei.pcm"
-        client = TranscribeStreamingClient(region="us-west-2")
-
-        stream = await client.start_stream_transcription(
-            language_code="en-US",
-            media_sample_rate_hz=16000,
-            media_encoding="pcm"
-        )
-
-        handler = WebSocketTranscriptHandler(stream.output_stream, self)
-
-        async def send_audio():
-            async with aiofile.AIOFile(file_path, 'rb') as afp:
-                reader = aiofile.Reader(afp, chunk_size=1024 * 16)
-                async for chunk in reader:
-                    await stream.input_stream.send_audio_event(audio_chunk=chunk)
-            await stream.input_stream.end_stream()
-
-        await asyncio.gather(send_audio(), handler.handle_events())
-        await self.send(text_data="✅ Transcription complete.")
-        await self.close()
-
-    def disconnect(self, close_code):
+    async def disconnect(self, close_code):
+        await self.send(text_data="🔊 Disconnected...")
         pass
 
-    async def receive(self, text_data):
-        await self.send(text_data=f"You said: {text_data}")
-        # text_data_json = json.loads(text_data)
-        # message = text_data_json["message"]
-
-        # self.send(text_data=json.dumps({"message": message}))
+    async def receive(self, bytes_data=None):
+        print(f"Received {len(bytes_data)} bytes")
+        # Handle the binary audio data here
+        # For example, forward this to an async generator or AWS Transcribe
+        await self.send(text_data=f"Received {len(bytes_data)} bytes")
