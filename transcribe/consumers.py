@@ -4,6 +4,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent, AudioEvent
+from transcribe.models import Transcribe, TranscribeSet
+from channels.db import database_sync_to_async
 
 class WebSocketTranscriptHandler(TranscriptResultStreamHandler):
     def __init__(self, stream, websocket):
@@ -19,15 +21,38 @@ class WebSocketTranscriptHandler(TranscriptResultStreamHandler):
                     "transcript": alt.transcript,
                 }))
 
+                # TODO: If user is logged in, store the transcript
+                # if is_store:
+                #     await self.create_transcribe(alt.transcript)
+
 class TranscribeConsumer(AsyncWebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.audio_queue = asyncio.Queue()
         self.transcribe_task = None
         self.transcribe_started = False
+        self.user_id = None
+        self.transcribe_set_id = None
+    
+    @database_sync_to_async
+    def get_user_id(self):
+        return self.scope['user'].id
+        
+    @database_sync_to_async
+    def create_transcribe_set(self):
+        return TranscribeSet.objects.create(user_id=self.user_id)
+    
+    @database_sync_to_async
+    def create_transcribe(self, sentence):
+        return Transcribe.objects.create(sentence=sentence, user_id=self.user_id, transcribe_set_id=self.transcribe_set_id)
 
     async def connect(self):
         await self.accept()
+        self.user_id = await self.get_user_id()
+        
+        if self.user_id:
+            self.transcribe_set_id = await self.create_transcribe_set()
+
         await self.send(text_data=json.dumps({
             "type": "system",
             "message": "🔊 Connected and ready for audio."
