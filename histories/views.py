@@ -1,15 +1,15 @@
 from rest_framework import viewsets, permissions, mixins, status
 from django.shortcuts import get_object_or_404
-from histories.models import TranscribeSet
-from histories.serializers import TranscribeSetSerializer
+from histories.models import HistorySet
+from histories.serializers import HistorySetSerializer
 from rest_framework.response import Response
 
-class TranscribeSetViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
-    serializer_class = TranscribeSetSerializer
+class HistorySetViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+    serializer_class = HistorySetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return TranscribeSet.objects.filter(user_id=self.request.user.id)
+        return HistorySet.objects.filter(user_id=self.request.user.id)
 
     def get_object(self):
         return get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])

@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from histories.models import TranscribeSet
+from histories.models import HistorySet
 
-class TranscribeSetSerializer(serializers.ModelSerializer):
+class HistorySetSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TranscribeSet
+        model = HistorySet
         fields = ['id', 'title', 'created_at']

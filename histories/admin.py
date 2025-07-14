@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Transcribe, TranscribeSet   
+from .models import History, HistorySet   
 
 # Register your models here.
-admin.site.register(Transcribe)
-admin.site.register(TranscribeSet)
+admin.site.register(History)
+admin.site.register(HistorySet)

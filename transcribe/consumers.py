@@ -5,23 +5,38 @@ from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent
 from accounts.models import User
-from histories.models import Transcribe, TranscribeSet
+from histories.models import History, HistorySet
 from channels.db import database_sync_to_async
 from datetime import datetime
 
+TYPE_SYSTEM = {
+    "SYSTEM": "system",
+    "TRANSCRIPTION": "transcription",
+    "ERROR": "error",
+}
+
 class WebSocketTranscriptHandler(TranscriptResultStreamHandler):
-    def __init__(self, stream, websocket):
+    def __init__(self, stream, websocket, user=None, history_set=None, create_history=None, consumer=None):
         super().__init__(stream)
         self.websocket = websocket
+        self.user = user
+        self.history_set = history_set
+        self.create_history = create_history
+        self.consumer = consumer
 
     async def handle_transcript_event(self, event: TranscriptEvent):
         for result in event.transcript.results:
             for alt in result.alternatives:
                 await self.websocket.send(text_data=json.dumps({
-                    "type": "transcription",
-                    "is_partial": result.is_partial,
-                    "transcript": alt.transcript,
+                    "data": {
+                        "type": TYPE_SYSTEM["TRANSCRIPTION"],
+                        "content": alt.transcript,
+                        "is_partial": result.is_partial,
+                    },
+                    "error": None
                 }))
+                if not result.is_partial:
+                    await self.create_history(alt.transcript)
 
 class TranscribeConsumer(AsyncWebsocketConsumer):
     def __init__(self, *args, **kwargs):
@@ -37,23 +52,26 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
         return User.objects.get(id=user_id)
 
     @database_sync_to_async
-    def get_transcribe_set(self, transcribe_set_id):
-        return TranscribeSet.objects.get(id=transcribe_set_id)
+    def get_history_set(self, history_set_id):
+        return HistorySet.objects.get(id=history_set_id)
 
     @database_sync_to_async
-    def create_transcribe_set(self, title):
-        return TranscribeSet.objects.create(user_id=self.user, title=title)
+    def create_history_set(self, title):
+        return HistorySet.objects.create(user=self.user, title=title)
     
     @database_sync_to_async
-    def create_transcribe(self, sentence):
-        return Transcribe.objects.create(sentence=sentence, user_id=self.user, transcribe_set_id=self.transcribe_set)
+    def create_history(self, content):
+        return History.objects.create(content=content, user=self.user, history_set=self.history_set)
 
     async def connect(self):
         await self.accept()
         
         await self.send(text_data=json.dumps({
-            "type": "system",
-            "message": "🔊 Connected and ready for audio."
+            "data": {
+                "type": TYPE_SYSTEM["SYSTEM"],
+                "content": "🔊 Connected and ready for audio.",
+            },
+            "error": None
         }))
         print("✅ WebSocket connected")
 
@@ -72,7 +90,6 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
                 self.transcribe_started = True
                 print("🚀 Transcribe task started")
             
-            print("self.scope['user'].is_authenticated -----", self.scope['user'].is_authenticated)
             if self.scope['user'].is_authenticated:
                 if not self.user:
                     user_id = self.scope['user'].id
@@ -81,7 +98,7 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
 
                 if not self.transcribe_set:
                     title = f"Subtitle at {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-                    self.transcribe_set = await self.create_transcribe_set(title)
+                    self.transcribe_set = await self.create_history_set(title)
                     print("✅ Transcribe set created")
 
             await self.audio_queue.put(bytes_data)
@@ -108,7 +125,8 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
                     await stream.input_stream.send_audio_event(audio_chunk=chunk)
 
             async def receive_transcripts():
-                handler = WebSocketTranscriptHandler(stream.output_stream, self)
+                handler = WebSocketTranscriptHandler(stream.output_stream, self, self.user, self.history_set, self.create_history, self)
+                print("🔁 handler activated")
                 await handler.handle_events()
 
             await asyncio.gather(send_audio(), receive_transcripts())
@@ -116,6 +134,9 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
         except Exception as e:
             print(f"❌ Error in stream_to_transcribe: {e}")
             await self.send(text_data=json.dumps({
-                "type": "error",
-                "message": str(e)
-            }))
+                "data": None,
+                "error": {
+                    "type": TYPE_SYSTEM["ERROR"],
+                    "content": str(e)
+                }}
+            ))

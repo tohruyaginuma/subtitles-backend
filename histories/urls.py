@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import TranscribeSetViewSet
+from .views import HistorySetViewSet
 
 urlpatterns = [
-    path('transcribe-set/', TranscribeSetViewSet.as_view({'get': 'list'})),
-    path('transcribe-set/<int:pk>/', TranscribeSetViewSet.as_view({'put': 'update', 'patch': 'partial_update'})),
+    path('history-set/', HistorySetViewSet.as_view({'get': 'list'})),
+    path('history-set/<int:pk>/', HistorySetViewSet.as_view({'put': 'update', 'patch': 'partial_update'})),
 ]
