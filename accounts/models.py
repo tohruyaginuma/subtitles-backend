@@ -32,7 +32,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
-    def update_last_login(self):
-        self.last_login = timezone.now()
-        self.save()
