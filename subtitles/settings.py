@@ -144,6 +144,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated', 
     ],
     'EXCEPTION_HANDLER': 'subtitles.exceptions.custom_exception_handler', 
+    'DEFAULT_RENDERER_CLASSES': (
+        'subtitles.renderers.CustomJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }
 
 AUTH_USER_MODEL = 'accounts.User'

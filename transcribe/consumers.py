@@ -16,13 +16,9 @@ TYPE_SYSTEM = {
 }
 
 class WebSocketTranscriptHandler(TranscriptResultStreamHandler):
-    def __init__(self, stream, websocket, user=None, history_set=None, create_history=None, consumer=None):
+    def __init__(self, stream, websocket):
         super().__init__(stream)
         self.websocket = websocket
-        self.user = user
-        self.history_set = history_set
-        self.create_history = create_history
-        self.consumer = consumer
 
     async def handle_transcript_event(self, event: TranscriptEvent):
         for result in event.transcript.results:
@@ -35,8 +31,6 @@ class WebSocketTranscriptHandler(TranscriptResultStreamHandler):
                     },
                     "error": None
                 }))
-                if not result.is_partial:
-                    await self.create_history(alt.transcript)
 
 class TranscribeConsumer(AsyncWebsocketConsumer):
     def __init__(self, *args, **kwargs):
@@ -46,22 +40,6 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
         self.transcribe_started = False
         self.user = None
         self.transcribe_set = None
-    
-    @database_sync_to_async
-    def get_user(self, user_id):
-        return User.objects.get(id=user_id)
-
-    @database_sync_to_async
-    def get_history_set(self, history_set_id):
-        return HistorySet.objects.get(id=history_set_id)
-
-    @database_sync_to_async
-    def create_history_set(self, title):
-        return HistorySet.objects.create(user=self.user, title=title)
-    
-    @database_sync_to_async
-    def create_history(self, content):
-        return History.objects.create(content=content, user=self.user, history_set=self.history_set)
 
     async def connect(self):
         await self.accept()
@@ -73,6 +51,13 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
             },
             "error": None
         }))
+
+        # Start transcription only when audio begins
+        if not self.transcribe_started:
+            self.transcribe_task = asyncio.create_task(self.stream_to_transcribe())
+            self.transcribe_started = True
+            print("🚀 Transcribe task started")
+
         print("✅ WebSocket connected")
 
     async def disconnect(self, close_code):
@@ -83,23 +68,6 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None):
         if bytes_data:
             print(f"📥 Received {len(bytes_data)} bytes")
-
-            # Start transcription only when audio begins
-            if not self.transcribe_started:
-                self.transcribe_task = asyncio.create_task(self.stream_to_transcribe())
-                self.transcribe_started = True
-                print("🚀 Transcribe task started")
-            
-            if self.scope['user'].is_authenticated:
-                if not self.user:
-                    user_id = self.scope['user'].id
-                    self.user = await self.get_user(user_id)
-                    print("✅ User set")
-
-                if not self.transcribe_set:
-                    title = f"Subtitle at {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-                    self.transcribe_set = await self.create_history_set(title)
-                    print("✅ Transcribe set created")
 
             await self.audio_queue.put(bytes_data)
 

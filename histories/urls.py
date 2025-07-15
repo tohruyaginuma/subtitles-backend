@@ -1,7 +1,19 @@
 from django.urls import path
-from .views import HistorySetViewSet
+from .views import HistorySetViewSet, HistoryViewSet
+from rest_framework.routers import DefaultRouter
+from django.urls import include
+
+router = DefaultRouter()
+router.register(r'history-set', HistorySetViewSet, basename='history-set')
+
+history_list_create = HistoryViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
 
 urlpatterns = [
-    path('history-set/', HistorySetViewSet.as_view({'get': 'list'})),
-    path('history-set/<int:pk>/', HistorySetViewSet.as_view({'put': 'update', 'patch': 'partial_update'})),
+    path('', include(router.urls)),
+    path('history-set/<uuid:history_set_id>/history/', history_list_create, name='history-list-create'),
+
 ]

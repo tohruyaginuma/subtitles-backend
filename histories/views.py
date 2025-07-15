@@ -1,23 +1,27 @@
 from rest_framework import viewsets, permissions, mixins, status
 from django.shortcuts import get_object_or_404
-from histories.models import HistorySet
-from histories.serializers import HistorySetSerializer
+from histories.models import HistorySet, History
+from histories.serializers import HistorySetSerializer, HistorySerializer
 from rest_framework.response import Response
 
-class HistorySetViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class HistoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+    serializer_class = HistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        history_set_id = self.kwargs["history_set_id"]
+        return History.objects.filter(history_set=history_set_id)
+    
+    def perform_create(self, serializer):
+        history_set_id = self.kwargs["history_set_id"]
+        serializer.save(history_set=HistorySet.objects.get(id=history_set_id))
+
+class HistorySetViewSet(viewsets.ModelViewSet):
     serializer_class = HistorySetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return HistorySet.objects.filter(user_id=self.request.user.id)
-
-    def get_object(self):
-        return get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
-
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = self.get_queryset().order_by('-created_at')
-            serializer = self.get_serializer(queryset, many=True)
-            return Response({"data": serializer.data, "error": None}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"data": None, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return HistorySet.objects.filter(user=self.request.user.id)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
