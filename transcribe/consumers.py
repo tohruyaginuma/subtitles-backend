@@ -93,7 +93,7 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
                     await stream.input_stream.send_audio_event(audio_chunk=chunk)
 
             async def receive_transcripts():
-                handler = WebSocketTranscriptHandler(stream.output_stream, self, self.user, self.history_set, self.create_history, self)
+                handler = WebSocketTranscriptHandler(stream.output_stream, self)
                 print("🔁 handler activated")
                 await handler.handle_events()
 
