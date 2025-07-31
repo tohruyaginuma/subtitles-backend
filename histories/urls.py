@@ -14,6 +14,5 @@ history_list_create = HistoryViewSet.as_view({
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('history-set/<uuid:history_set_id>/history/', history_list_create, name='history-list-create'),
-
+    path('history-set/<uuid:history_set_id>/history/', history_list_create, name='history'),
 ]
