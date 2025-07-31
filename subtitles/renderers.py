@@ -10,6 +10,6 @@ class CustomJSONRenderer(JSONRenderer):
         response = renderer_context.get('response', None)
         if response and not str(response.status_code).startswith('2'):
             response_data['data'] = None
-            response_data['error'] = data
+            response_data['error'] = data['error']
 
         return super().render(response_data, accepted_media_type, renderer_context)
