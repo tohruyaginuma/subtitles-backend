@@ -1,5 +1,6 @@
 import asyncio
 import json
+from django.conf import settings
 from channels.generic.websocket import AsyncWebsocketConsumer
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
@@ -74,7 +75,9 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
     async def stream_to_transcribe(self):
         print("🔁 stream_to_transcribe starting...")
         try:
-            client = TranscribeStreamingClient(region="us-west-2")
+            client = TranscribeStreamingClient(
+                region=settings.AWS_REGION,
+            )
 
             # Start stream (no audio_stream param)
             stream = await client.start_stream_transcription(
