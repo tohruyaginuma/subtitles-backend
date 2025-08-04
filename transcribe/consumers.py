@@ -90,17 +90,31 @@ class TranscribeConsumer(AsyncWebsocketConsumer):
 
             async def send_audio():
                 print("🎧 send_audio generator activated")
-                while True:
-                    chunk = await self.audio_queue.get()
-                    print(f"🎙️ Sending chunk to AWS Transcribe: {len(chunk)} bytes")
-                    await stream.input_stream.send_audio_event(audio_chunk=chunk)
+                try:
+                    while True:
+                        chunk = await self.audio_queue.get()
+                        print(f"🎙️ Sending chunk to AWS Transcribe: {len(chunk)} bytes")
+                        await stream.input_stream.send_audio_event(audio_chunk=chunk)
+                except asyncio.CancelledError:
+                    print("🛑 send_audio cancelled")
+                    await stream.input_stream.end_stream()
+                    raise
 
             async def receive_transcripts():
                 handler = WebSocketTranscriptHandler(stream.output_stream, self)
                 print("🔁 handler activated")
-                await handler.handle_events()
+                try:
+                    await handler.handle_events()
+                except asyncio.CancelledError:
+                    print("🛑 receive_transcripts cancelled")
+                    raise
+                except Exception as e:
+                    print(f"❗ Transcript handling error: {e}")
 
-            await asyncio.gather(send_audio(), receive_transcripts())
+            await asyncio.gather(
+                asyncio.shield(send_audio()),
+                asyncio.shield(receive_transcripts())
+            )
 
         except Exception as e:
             print(f"❌ Error in stream_to_transcribe: {e}")
