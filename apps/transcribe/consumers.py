@@ -5,8 +5,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from amazon_transcribe.client import TranscribeStreamingClient
 from amazon_transcribe.handlers import TranscriptResultStreamHandler
 from amazon_transcribe.model import TranscriptEvent
-from accounts.models import User
-from histories.models import History, HistorySet
+from apps.accounts.models import User
+from apps.histories.models import History, HistorySet
 from channels.db import database_sync_to_async
 from datetime import datetime
 

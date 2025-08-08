@@ -1,8 +1,6 @@
-from rest_framework import viewsets, permissions, mixins, status
-from django.shortcuts import get_object_or_404
-from histories.models import HistorySet, History
-from histories.serializers import HistorySetSerializer, HistorySerializer
-from rest_framework.response import Response
+from rest_framework import viewsets, permissions, mixins
+from .models import HistorySet, History
+from .serializers import HistorySetSerializer, HistorySerializer
 
 class HistoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = HistorySerializer

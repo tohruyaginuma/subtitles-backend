@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from histories.models import HistorySet, History
+from .models import HistorySet, History
 
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:

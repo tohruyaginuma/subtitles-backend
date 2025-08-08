@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     # apps
-    'transcribe',
-    'accounts',
-    'histories',
+    'apps.transcribe',
+    'apps.accounts',
+    'apps.histories',
 ]
 
 MIDDLEWARE = [

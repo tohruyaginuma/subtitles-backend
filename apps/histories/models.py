@@ -1,6 +1,6 @@
 from django.db import models
+from django.conf import settings
 import uuid
-from accounts.models import User
 
 # Create your models here.
 class History(models.Model):
@@ -16,7 +16,7 @@ class History(models.Model):
 class HistorySet(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
