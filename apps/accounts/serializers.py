@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
+from django.contrib.auth.password_validation import validate_password
 
 User = get_user_model()
 
@@ -11,19 +11,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ("email", "password")
 
+    def validate_password(self, value):
+        validate_password(value)
+        return value
+
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-
-        # Add custom fields to the response
-        data.update({
-            "email": self.user.email,
-        })
-
-        return data
-
-class CustomTokenRefreshSerializer(TokenRefreshSerializer):
-    pass
+class MeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("email",)

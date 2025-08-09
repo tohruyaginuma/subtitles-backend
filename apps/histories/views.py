@@ -1,25 +1,26 @@
-from rest_framework import viewsets, permissions, mixins
+from rest_framework import viewsets, mixins
 from .models import HistorySet, History
 from .serializers import HistorySetSerializer, HistorySerializer
+from apps.common.responses import ok, no_content, created
+from apps.common.views import BaseModelViewSet, BaseListCreateViewSet
 
-class HistoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
-    serializer_class = HistorySerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        history_set_id = self.kwargs["history_set_id"]
-        return History.objects.filter(history_set=history_set_id)
-    
-    def perform_create(self, serializer):
-        history_set_id = self.kwargs["history_set_id"]
-        serializer.save(history_set=HistorySet.objects.get(id=history_set_id))
-
-class HistorySetViewSet(viewsets.ModelViewSet):
+class HistorySetViewSet(BaseModelViewSet):
     serializer_class = HistorySetSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return HistorySet.objects.filter(user=self.request.user.id)
-    
+        return HistorySet.objects.filter(user=self.request.user)
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class HistoryViewSet(BaseListCreateViewSet):
+    serializer_class = HistorySerializer
+
+    def get_queryset(self):
+        hs_id = self.kwargs["history_set_id"]
+        return History.objects.filter(history_set_id=hs_id)
+
+    def perform_create(self, serializer):
+        hs_id = self.kwargs["history_set_id"]
+        serializer.save(history_set_id=hs_id)

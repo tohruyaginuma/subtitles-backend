@@ -148,14 +148,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated', 
     ],
-    'EXCEPTION_HANDLER': 'subtitles.exceptions.custom_exception_handler', 
-    'DEFAULT_RENDERER_CLASSES': (
-        'subtitles.renderers.CustomJSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    )
+    "EXCEPTION_HANDLER": "apps.common.exceptions.exception_handler",
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
 }
 
-AUTH_USER_MODEL = 'accounts.User'
+if DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] += ["rest_framework.renderers.BrowsableAPIRenderer"]
+
+AUTH_USER_MODEL = "accounts.User"
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
