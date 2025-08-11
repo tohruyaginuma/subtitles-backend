@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'apps.transcribe',
     'apps.accounts',
     'apps.histories',
+    'apps.health',
 ]
 
 MIDDLEWARE = [
