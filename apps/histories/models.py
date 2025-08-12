@@ -20,7 +20,7 @@ class HistorySet(models.Model):
 
 class History(models.Model):
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["created_at"]
         indexes = [
             models.Index(fields=["history_set", "created_at"]),
         ]
