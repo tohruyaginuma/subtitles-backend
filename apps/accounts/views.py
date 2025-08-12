@@ -32,6 +32,9 @@ class CustomTokenRefreshView(TokenRefreshView):
 
 class MeView(APIView):
     def get(self, request):
+        print("get me --------------------------------")
         user = User.objects.get(id=request.user.id)
+        print("finished search--------------------------------")
         serializer = MeSerializer(user)
+        print("finished serializer--------------------------------")
         return ok(serializer.data)
