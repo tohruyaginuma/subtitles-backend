@@ -18,7 +18,6 @@ def exception_handler(exc, context):
             flat_msg = str(details)
 
         response.data = {
-            "data": None,
             "error": {
                 "code": ERROR_CODE.get(type(exc), ("error", response.status_code))[0],
                 "message": flat_msg,
@@ -27,12 +26,11 @@ def exception_handler(exc, context):
         }
     else:
         response = Response({
-            "data": None,
             "error": {
                 "code": "server_error",
                 "message": str(exc),
                 "details": None
             }
-        }, status=500)
+        }, status=ERROR_CODE[Exception][1])
 
     return response
