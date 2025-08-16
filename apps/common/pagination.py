@@ -3,8 +3,9 @@ from urllib.parse import urlsplit
 from rest_framework.response import Response
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 20
-    max_limit = 50
+    # TODO: fix api limit
+    default_limit = 200
+    max_limit = 200
 
     def _to_relative(self, url: str | None) -> str | None:
         """
