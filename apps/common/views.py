@@ -1,11 +1,19 @@
 # apps/common/views.py
 from rest_framework import viewsets, mixins
 from apps.common.responses import ok, created, no_content
-
+from apps.common.pagination import CustomLimitOffsetPagination
 
 class BaseModelViewSet(viewsets.ModelViewSet):
+    pagination_class = CustomLimitOffsetPagination
+
     def list(self, request, *args, **kwargs):
         query_set = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(query_set)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         serializer = self.get_serializer(query_set, many=True)
         return ok(serializer.data)
 
@@ -42,10 +50,16 @@ class BaseListCreateViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet
 ):
+    pagination_class = CustomLimitOffsetPagination
+
     def list(self, request, *args, **kwargs):
         query_set = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(query_set)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(query_set, many=True)
-        return ok(serializer.data)
+        return ok({"data": serializer.data})
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
