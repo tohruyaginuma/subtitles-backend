@@ -13,7 +13,6 @@ class HistorySetViewSet(BaseModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-
 class HistoryViewSet(BaseListCreateViewSet):
     serializer_class = HistorySerializer
 
