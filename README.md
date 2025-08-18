@@ -68,8 +68,7 @@ All API requests and responses follow this structure:
 
 ```json
 {
-  "data": { ... },
-  "error": null
+  { ... },
 }
 ```
 
@@ -77,7 +76,6 @@ Errors will have the form:
 
 ```json
 {
-  "data": null,
   "error": {
     "code": "",
     "message": "",
