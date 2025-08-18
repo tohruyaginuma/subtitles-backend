@@ -1,11 +1,9 @@
 from rest_framework.pagination import LimitOffsetPagination
 from urllib.parse import urlsplit
 from rest_framework.response import Response
+from rest_framework import status
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
-    # TODO: fix api limit
-    default_limit = 200
-    max_limit = 200
 
     def _to_relative(self, url: str | None) -> str | None:
         """
@@ -22,4 +20,4 @@ class CustomLimitOffsetPagination(LimitOffsetPagination):
             'next': self._to_relative(self.get_next_link()),
             'previous': self._to_relative(self.get_previous_link()),
             'results': data
-        })
+        }, status=status.HTTP_200_OK)
