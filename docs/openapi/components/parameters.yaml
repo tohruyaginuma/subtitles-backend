@@ -1,0 +1,17 @@
+LimitParam:
+  name: limit
+  in: query
+  required: false
+  schema:
+    type: integer
+    default: 10
+  description: Number of items to return
+
+OffsetParam:
+  name: offset
+  in: query
+  required: false
+  schema:
+    type: integer
+    default: 0
+  description: Offset for pagination

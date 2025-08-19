@@ -1,0 +1,39 @@
+post:
+  summary: Get a new token.
+  description: Get a new token.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/LoginRequest"
+        examples:
+
+  responses:
+    "200":
+      description: User login success
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/LoginResponse"
+
+    "400":
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/LoginErrorResponse"
+
+    "401":
+      description: Invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/LoginErrorResponse"
+
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/LoginErrorResponse"

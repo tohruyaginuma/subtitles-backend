@@ -1,0 +1,10 @@
+get:
+  summary: Returns a list of history.
+  description: Returns a list of history.
+  parameters:
+    # - $ref: "../components/parameters.yaml#/components/parameters/LimitParam"
+    # - $ref: "../components/parameters.yaml#/components/parameters/OffsetParam"
+
+post:
+  summary: Returns a list of history.
+  description: Optional extended description in CommonMark or HTML.

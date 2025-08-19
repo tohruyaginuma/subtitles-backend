@@ -1,0 +1,16 @@
+RegisterExample:
+  summary: Valid registration payload
+  value:
+    email: "user@example.com"
+    password: "password123"
+
+LoginExample:
+  summary: Valid login payload
+  value:
+    email: "user@example.com"
+    password: "password123"
+
+TokenRefreshExample:
+  summary: Valid token refresh payload
+  value:
+    refresh_token: "1234567890"

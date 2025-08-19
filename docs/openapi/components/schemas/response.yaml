@@ -1,0 +1,142 @@
+RegisterResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+LoginResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+LoginErrorResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+TokenRefreshResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+ListHistorySetResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+RetrieveHistorySetResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+CreateHistorySetResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+UpdateHistorySetResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+DeleteHistorySetResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+ListHistoryResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600
+
+CreateHistoryResponse:
+  type: object
+  properties:
+    access_token:
+      type: string
+      example: "1234567890"
+    refresh_token:
+      type: string
+      example: "1234567890"
+    expires_in:
+      type: integer
+      example: 3600

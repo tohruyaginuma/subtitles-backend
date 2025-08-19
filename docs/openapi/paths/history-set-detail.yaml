@@ -1,0 +1,21 @@
+get:
+  summary: Returns a list of history sets.
+  description: Returns a list of history sets.
+
+patch:
+  summary: Update a history set.
+  description: Update a history set.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+
+delete:
+  summary: Delete a history set.
+  description: Delete a history set.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:

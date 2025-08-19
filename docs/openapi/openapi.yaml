@@ -1,0 +1,84 @@
+openapi: 3.0.4
+info:
+  title: Subtitles API
+  version: 1.0.0
+  description: REST API for the Subtitles application
+
+servers:
+  - url: http://127.0.0.1:8000/v1
+    description: Local
+  - url: https://subtitles-backend-production.up.railway.app/v1
+    description: Production
+
+paths:
+  /register/:
+    $ref: "./paths/register.yaml"
+  /token/:
+    $ref: "./paths/token.yaml"
+  /token/refresh/:
+    $ref: "./paths/token-refresh.yaml"
+  /history-set/:
+    $ref: "./paths/history-set.yaml"
+  /history-set/{history_set_id}/:
+    $ref: "./paths/history-set-detail.yaml"
+  /history-set/{history_set_id}/history/:
+    $ref: "./paths/history-set-history.yaml"
+
+components:
+  schemas:
+    RegisterRequest:
+      $ref: "./components/schemas/request.yaml#/RegisterRequest"
+    LoginRequest:
+      $ref: "./components/schemas/request.yaml#/LoginRequest"
+    TokenRefreshRequest:
+      $ref: "./components/schemas/request.yaml#/TokenRefreshRequest"
+    ListHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/ListHistorySetRequest"
+    RetrieveHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/RetrieveHistorySetRequest"
+    CreateHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/CreateHistorySetRequest"
+    UpdateHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/UpdateHistorySetRequest"
+    DeleteHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/DeleteHistorySetRequest"
+    ListHistoryRequest:
+      $ref: "./components/schemas/request.yaml#/ListHistoryRequest"
+    CreateHistoryRequest:
+      $ref: "./components/schemas/request.yaml#/CreateHistoryRequest"
+    RegisterResponse:
+      $ref: "./components/schemas/response.yaml#/RegisterResponse"
+    LoginResponse:
+      $ref: "./components/schemas/response.yaml#/LoginResponse"
+    LoginErrorResponse:
+      $ref: "./components/schemas/response.yaml#/LoginErrorResponse"
+    TokenRefreshResponse:
+      $ref: "./components/schemas/response.yaml#/TokenRefreshResponse"
+    ListHistorySetResponse:
+      $ref: "./components/schemas/response.yaml#/ListHistorySetResponse"
+    RetrieveHistorySetResponse:
+      $ref: "./components/schemas/response.yaml#/RetrieveHistorySetResponse"
+    CreateHistorySetResponse:
+      $ref: "./components/schemas/response.yaml#/CreateHistorySetResponse"
+    UpdateHistorySetResponse:
+      $ref: "./components/schemas/response.yaml#/UpdateHistorySetResponse"
+    DeleteHistorySetResponse:
+      $ref: "./components/schemas/response.yaml#/DeleteHistorySetResponse"
+    ListHistoryResponse:
+      $ref: "./components/schemas/response.yaml#/ListHistoryResponse"
+    CreateHistoryResponse:
+      $ref: "./components/schemas/response.yaml#/CreateHistoryResponse"
+
+  parameters:
+    LimitParam:
+      $ref: "./components/parameters.yaml#/LimitParam"
+    OffsetParam:
+      $ref: "./components/parameters.yaml#/OffsetParam"
+
+  examples:
+    RegisterExample:
+      $ref: "./components/examples.yaml#/RegisterExample"
+    LoginExample:
+      $ref: "./components/examples.yaml#/LoginExample"
+    TokenRefreshExample:
+      $ref: "./components/examples.yaml#/TokenRefreshExample"

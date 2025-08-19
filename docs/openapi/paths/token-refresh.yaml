@@ -1,0 +1,36 @@
+post:
+  summary: Refresh a token.
+  description: Refresh a token.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/TokenRefreshRequest"
+        examples:
+          $ref: "../openapi.yaml#/components/examples/TokenRefreshExample"
+  responses:
+    "200":
+      description: Token refreshed successfully
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
+    "400":
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
+    "401":
+      description: Unauthorized 
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
