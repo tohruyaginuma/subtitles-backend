@@ -1,0 +1,33 @@
+@startuml
+entity "User" as user {
+  *id : Integer <<PK>>
+  --
+  *email : String <<UNIQUE>>
+  *password : String
+  is_staff : Boolean
+  is_active : Boolean
+  is_superuser : Boolean
+  created_at : DateTime <<AUTO>>
+  last_login : DateTime <<AUTO>>
+}
+
+entity "History" as history {
+  *id : String <<PK>>
+  --
+  *content: String
+  *history_set:  <<FK>>
+  created_at: DateTime <<AUTO>>
+}
+
+entity "HistorySet" as historySet {
+  *id : String <<PK>>
+  --
+  *title: String
+  *user_id: User <<FK>>
+  created_at: DateTime <<AUTO>>
+  updated_at: DateTime <<AUTO>>
+}
+
+history }|--|| historySet 
+user ||--o{ historySet 
+@enduml
