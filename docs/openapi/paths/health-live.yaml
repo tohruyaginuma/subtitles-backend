@@ -1,0 +1,12 @@
+get:
+  summary: Check if the server is live.
+  description: Check if the server is live.
+  responses:
+    "200":
+      description: Server is live
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/HealthCheckResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/InternalServerErrorResponse"

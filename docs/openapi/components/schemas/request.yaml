@@ -85,5 +85,5 @@ CreateHistoryRequest:
   required:
     - refresh_token
   properties:
-    refresh_token:
+    content:
       type: string

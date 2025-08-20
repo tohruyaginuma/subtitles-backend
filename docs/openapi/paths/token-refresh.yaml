@@ -7,8 +7,6 @@ post:
       application/json:
         schema:
           $ref: "../openapi.yaml#/components/schemas/TokenRefreshRequest"
-          examples:
-            $ref: "../openapi.yaml#/components/examples/TokenRefreshRequestExample"
   responses:
     "200":
       description: Token refreshed successfully
@@ -16,9 +14,6 @@ post:
         application/json:
           schema:
             $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
-          examples:
-            success:
-              $ref: "../openapi.yaml#/components/examples/TokenRefreshResponseExample"
     "400":
       $ref: "../openapi.yaml#/components/responses/BadRequestResponse"
     "500":

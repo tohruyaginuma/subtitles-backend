@@ -5,24 +5,28 @@ info:
   description: REST API for the Subtitles application
 
 servers:
-  - url: http://127.0.0.1:8000/v1
+  - url: http://127.0.0.1:8000
     description: Local
-  - url: https://subtitles-backend-production.up.railway.app/v1
+  - url: https://subtitles-backend-production.up.railway.app
     description: Production
 
 paths:
-  /register/:
+  /v1/register/:
     $ref: "./paths/register.yaml"
-  /token/:
+  /v1/token/:
     $ref: "./paths/token.yaml"
-  /token/refresh/:
+  /v1/token/refresh/:
     $ref: "./paths/token-refresh.yaml"
-  /history-set/:
+  /v1/history-set/:
     $ref: "./paths/history-set.yaml"
-  /history-set/{history_set_id}/:
+  /v1/history-set/{history_set_id}/:
     $ref: "./paths/history-set-detail.yaml"
-  /history-set/{history_set_id}/history/:
+  /v1/history-set/{history_set_id}/history/:
     $ref: "./paths/history-set-history.yaml"
+  /health/live/:
+    $ref: "./paths/health-live.yaml"
+  /health/ready/:
+    $ref: "./paths/health-ready.yaml"
 
 components:
   schemas:
@@ -85,9 +89,13 @@ components:
       $ref: "./components/schemas/response.yaml#/AuthenticationErrorResponse"
     ServerErrorResponse:
       $ref: "./components/schemas/response.yaml#/ServerErrorResponse"
+    ServiceUnavailableErrorResponse:
+      $ref: "./components/schemas/response.yaml#/ServiceUnavailableErrorResponse"
 
     PaginatedResponseBase:
       $ref: "./components/schemas/response.yaml#/PaginatedResponseBase"
+    HealthCheckResponse:
+      $ref: "./components/schemas/response.yaml#/HealthCheckResponse"
 
   responses:
     NoContentResponse:
@@ -100,6 +108,8 @@ components:
       $ref: "./components/responses.yaml#/BadRequestResponse"
     InternalServerErrorResponse:
       $ref: "./components/responses.yaml#/InternalServerErrorResponse"
+    ServiceUnavailableErrorResponse:
+      $ref: "./components/responses.yaml#/ServiceUnavailableErrorResponse"
 
   parameters:
     LimitParam:
@@ -110,25 +120,7 @@ components:
   examples:
     RegisterRequestExample:
       $ref: "./components/examples.yaml#/RegisterRequestExample"
-
     LoginRequestExample:
       $ref: "./components/examples.yaml#/LoginRequestExample"
     LoginResponseExample:
       $ref: "./components/examples.yaml#/LoginResponseExample"
-
-    TokenRefreshRequestExample:
-      $ref: "./components/examples.yaml#/TokenRefreshRequestExample"
-    TokenRefreshResponseExample:
-      $ref: "./components/examples.yaml#/TokenRefreshResponseExample"
-
-    CreateHistorySetRequestExample:
-      $ref: "./components/examples.yaml#/CreateHistorySetRequestExample"
-
-    BadRequestResponseExample:
-      $ref: "./components/examples.yaml#/BadRequestResponseExample"
-    UnauthorizedResponseExample:
-      $ref: "./components/examples.yaml#/UnauthorizedResponseExample"
-    ForbiddenResponseExample:
-      $ref: "./components/examples.yaml#/ForbiddenResponseExample"
-    ServerErrorResponseExample:
-      $ref: "./components/examples.yaml#/ServerErrorResponseExample"

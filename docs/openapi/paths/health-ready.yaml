@@ -1,0 +1,14 @@
+get:
+  summary: Check if the server is ready.
+  description: Check if the server is ready.
+  responses:
+    "200":
+      description: Server is ready
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/HealthCheckResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/InternalServerErrorResponse"
+    "503":
+      $ref: "../openapi.yaml#/components/responses/ServiceUnavailableErrorResponse"

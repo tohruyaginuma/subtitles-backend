@@ -12,12 +12,8 @@ get:
         application/json:
           schema:
             $ref: "../openapi.yaml#/components/schemas/ListHistorySetResponse"
-    "400":
-      $ref: "../openapi.yaml#/components/responses/BadRequestResponse"
     "401":
       $ref: "../openapi.yaml#/components/responses/UnauthorizedResponse"
-    "403":
-      $ref: "../openapi.yaml#/components/responses/ForbiddenResponse"
     "500":
       $ref: "../openapi.yaml#/components/responses/InternalServerErrorResponse"
 
@@ -30,8 +26,6 @@ post:
       application/json:
         schema:
           $ref: "../openapi.yaml#/components/schemas/CreateHistorySetRequest"
-          examples:
-            $ref: "../openapi.yaml#/components/examples/CreateHistorySetRequestExample"
   responses:
     "201":
       description: History set created successfully

@@ -7,9 +7,6 @@ BadRequestResponse:
     application/json:
       schema:
         $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
-      examples:
-        error:
-          $ref: "../openapi.yaml#/components/examples/BadRequestResponseExample"
 
 UnauthorizedResponse:
   description: Unauthorized response
@@ -17,9 +14,6 @@ UnauthorizedResponse:
     application/json:
       schema:
         $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
-      examples:
-        error:
-          $ref: "../openapi.yaml#/components/examples/UnauthorizedResponseExample"
 
 ForbiddenResponse:
   description: Forbidden response
@@ -27,9 +21,6 @@ ForbiddenResponse:
     application/json:
       schema:
         $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
-      examples:
-        error:
-          $ref: "../openapi.yaml#/components/examples/ForbiddenResponseExample"
 
 InternalServerErrorResponse:
   description: Internal server error response
@@ -37,6 +28,10 @@ InternalServerErrorResponse:
     application/json:
       schema:
         $ref: "../openapi.yaml#/components/schemas/ServerErrorResponse"
-      examples:
-        error:
-          $ref: "../openapi.yaml#/components/examples/ServerErrorResponseExample"
+
+ServiceUnavailableErrorResponse:
+  description: Service unavailable error response
+  content:
+    application/json:
+      schema:
+        $ref: "../openapi.yaml#/components/schemas/ServerErrorResponse"

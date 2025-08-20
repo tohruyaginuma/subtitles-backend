@@ -46,6 +46,8 @@ LoginResponse:
       type: string
     refresh:
       type: string
+    email:
+      type: string
 
 TokenRefreshResponse:
   type: object
@@ -90,14 +92,8 @@ RetrieveHistorySetResponse:
 CreateHistorySetResponse:
   type: object
   properties:
-    access_token:
+    id:
       type: string
-
-    refresh_token:
-      type: string
-
-    expires_in:
-      type: integer
 
 UpdateHistorySetResponse:
   type: object
@@ -164,3 +160,21 @@ HistoryResults:
       type: string
     created_at:
       type: string
+    updated_at:
+
+HealthCheckResponse:
+  type: object
+  properties:
+    status:
+      type: string
+
+ServiceUnavailableErrorResponse:
+  type: object
+  properties:
+    error:
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
