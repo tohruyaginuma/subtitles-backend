@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .serializers import RegisterSerializer, MeSerializer
+from .serializers import RegisterSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -20,7 +20,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return ok(serializer.validated_data)
+        user = User.objects.get(email=request.data["email"])
+        return ok({**serializer.validated_data, "email": user.email})
 
 
 class CustomTokenRefreshView(TokenRefreshView):
@@ -29,9 +30,3 @@ class CustomTokenRefreshView(TokenRefreshView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return ok(serializer.validated_data)
-
-class MeView(APIView):
-    def get(self, request):
-        user = User.objects.get(id=request.user.id)
-        serializer = MeSerializer(user)
-        return ok(serializer.data)

@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 10
+    max_limit = 100
 
     def _to_relative(self, url: str | None) -> str | None:
         """
