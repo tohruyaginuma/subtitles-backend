@@ -1,15 +1,13 @@
 get:
   summary: Returns a history set.
   description: Returns a history set.
-  parameters:
-    # - $ref: "../openapi.yaml#/components/parameters/HistorySetIdParam"
   responses:
     "200":
       description: History set retrieved successfully
       content:
         application/json:
           schema:
-            # $ref: "../openapi.yaml#/components/schemas/HistorySetResponse"
+            $ref: "../openapi.yaml#/components/schemas/RetrieveHistorySetResponse"
     "400":
       description: Bad request
       content:
@@ -53,10 +51,6 @@ patch:
   responses:
     "200":
       description: History set updated successfully
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/UpdateHistorySetResponse"
     "400":
       description: Bad request
       content:
@@ -92,12 +86,8 @@ delete:
   summary: Delete a history set.
   description: Delete a history set.
   responses:
-    "200":
+    "204":
       description: History set deleted successfully
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
     "400":
       description: Bad request
       content:

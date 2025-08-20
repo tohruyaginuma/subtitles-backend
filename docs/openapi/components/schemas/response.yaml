@@ -1,146 +1,166 @@
-RegisterResponse:
-  type: object
-  properties:
-    access_token:
-      type: string
-      example: "1234567890"
-    refresh_token:
-      type: string
-      example: "1234567890"
-
 ErrorResponse:
   type: object
   properties:
-    message:
-      type: string
-      example: "User already exists"
+    error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+  required:
+    - error
+
+AuthenticationErrorResponse:
+  type: object
+  properties:
+    error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  required:
+    - error
+
+ServerErrorResponse:
+  type: object
+  properties:
+    error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  required:
+    - error
 
 LoginResponse:
   type: object
   properties:
-    access_token:
+    access:
       type: string
-      example: "1234567890"
-    refresh_token:
+    refresh:
       type: string
-      example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
-
-LoginErrorResponse:
-  type: object
-  properties:
-    access_token:
-      type: string
-      example: "1234567890"
-    refresh_token:
-      type: string
-      example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
 
 TokenRefreshResponse:
   type: object
   properties:
-    access_token:
+    access:
       type: string
-      example: "1234567890"
-    refresh_token:
-      type: string
-      example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
 
 ListHistorySetResponse:
+  allOf:
+    - $ref: "../../openapi.yaml#/components/schemas/PaginatedResponseBase"
+    - type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "../../openapi.yaml#/components/schemas/HistorySetResults"
+
+HistorySetResults:
   type: object
   properties:
-    access_token:
+    id:
       type: string
-      example: "1234567890"
-    refresh_token:
+    title:
       type: string
-      example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
+    created_at:
+      type: string
+    updated_at:
+      type: string
 
 RetrieveHistorySetResponse:
   type: object
   properties:
-    access_token:
+    id:
       type: string
-      example: "1234567890"
-    refresh_token:
+    title:
       type: string
-      example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
+    created_at:
+      type: string
+    updated_at:
+      type: string
 
 CreateHistorySetResponse:
   type: object
   properties:
     access_token:
       type: string
-      example: "1234567890"
+
     refresh_token:
       type: string
-      example: "1234567890"
+
     expires_in:
       type: integer
-      example: 3600
 
 UpdateHistorySetResponse:
   type: object
   properties:
     access_token:
       type: string
-      example: "1234567890"
+
     refresh_token:
       type: string
-      example: "1234567890"
+
     expires_in:
       type: integer
-      example: 3600
 
 DeleteHistorySetResponse:
   type: object
   properties:
     access_token:
       type: string
-      example: "1234567890"
-    refresh_token:
-      type: string
-      example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
 
-ListHistoryResponse:
-  type: object
-  properties:
-    access_token:
-      type: string
-      example: "1234567890"
     refresh_token:
       type: string
-      example: "1234567890"
+
     expires_in:
       type: integer
-      example: 3600
 
 CreateHistoryResponse:
   type: object
   properties:
     access_token:
       type: string
-      example: "1234567890"
+
     refresh_token:
       type: string
-      example: "1234567890"
+
     expires_in:
       type: integer
-      example: 3600
+
+PaginatedResponseBase:
+  type: object
+  properties:
+    count:
+      type: integer
+    next:
+      type: string
+    previous:
+      type: string
+
+ListHistoryResponse:
+  allOf:
+    - $ref: "../../openapi.yaml#/components/schemas/PaginatedResponseBase"
+    - type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "../../openapi.yaml#/components/schemas/HistoryResults"
+
+HistoryResults:
+  type: object
+  properties:
+    id:
+      type: string
+    content:
+      type: string
+    created_at:
+      type: string

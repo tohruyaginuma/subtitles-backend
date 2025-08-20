@@ -4,6 +4,21 @@ get:
   parameters:
     - $ref: "../openapi.yaml#/components/parameters/LimitParam"
     - $ref: "../openapi.yaml#/components/parameters/OffsetParam"
+  responses:
+    "200":
+      description: History list retrieved successfully
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ListHistoryResponse"
+    "400":
+      $ref: "../openapi.yaml#/components/responses/BadRequestResponse"
+    "401":
+      $ref: "../openapi.yaml#/components/responses/UnauthorizedResponse"
+    "403":
+      $ref: "../openapi.yaml#/components/responses/ForbiddenResponse"
+    "500":
+      $ref: "../openapi.yaml#/components/responses/InternalServerErrorResponse"
 
 post:
   summary: Returns a list of history.
@@ -22,33 +37,10 @@ post:
           schema:
             $ref: "../openapi.yaml#/components/schemas/CreateHistoryResponse"
     "400":
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+      $ref: "../openapi.yaml#/components/responses/BadRequestResponse"
     "401":
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
-
+      $ref: "../openapi.yaml#/components/responses/UnauthorizedResponse"
     "403":
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
-    "409":
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+      $ref: "../openapi.yaml#/components/responses/ForbiddenResponse"
     "500":
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+      $ref: "../openapi.yaml#/components/responses/InternalServerErrorResponse"

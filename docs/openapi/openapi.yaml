@@ -28,52 +28,78 @@ components:
   schemas:
     RegisterRequest:
       $ref: "./components/schemas/request.yaml#/RegisterRequest"
-    RegisterResponse:
-      $ref: "./components/schemas/response.yaml#/RegisterResponse"
+
     LoginRequest:
       $ref: "./components/schemas/request.yaml#/LoginRequest"
-    TokenRefreshRequest:
-      $ref: "./components/schemas/request.yaml#/TokenRefreshRequest"
-    ListHistorySetRequest:
-      $ref: "./components/schemas/request.yaml#/ListHistorySetRequest"
-    RetrieveHistorySetRequest:
-      $ref: "./components/schemas/request.yaml#/RetrieveHistorySetRequest"
-    CreateHistorySetRequest:
-      $ref: "./components/schemas/request.yaml#/CreateHistorySetRequest"
-    UpdateHistorySetRequest:
-      $ref: "./components/schemas/request.yaml#/UpdateHistorySetRequest"
-    DeleteHistorySetRequest:
-      $ref: "./components/schemas/request.yaml#/DeleteHistorySetRequest"
-    ListHistoryRequest:
-      $ref: "./components/schemas/request.yaml#/ListHistoryRequest"
-    CreateHistoryRequest:
-      $ref: "./components/schemas/request.yaml#/CreateHistoryRequest"
     LoginResponse:
       $ref: "./components/schemas/response.yaml#/LoginResponse"
-    LoginErrorResponse:
-      $ref: "./components/schemas/response.yaml#/LoginErrorResponse"
+
+    TokenRefreshRequest:
+      $ref: "./components/schemas/request.yaml#/TokenRefreshRequest"
     TokenRefreshResponse:
       $ref: "./components/schemas/response.yaml#/TokenRefreshResponse"
+
+    ListHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/ListHistorySetRequest"
     ListHistorySetResponse:
       $ref: "./components/schemas/response.yaml#/ListHistorySetResponse"
+
+    RetrieveHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/RetrieveHistorySetRequest"
     RetrieveHistorySetResponse:
       $ref: "./components/schemas/response.yaml#/RetrieveHistorySetResponse"
+
+    CreateHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/CreateHistorySetRequest"
     CreateHistorySetResponse:
       $ref: "./components/schemas/response.yaml#/CreateHistorySetResponse"
+
+    UpdateHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/UpdateHistorySetRequest"
     UpdateHistorySetResponse:
       $ref: "./components/schemas/response.yaml#/UpdateHistorySetResponse"
+
+    DeleteHistorySetRequest:
+      $ref: "./components/schemas/request.yaml#/DeleteHistorySetRequest"
     DeleteHistorySetResponse:
       $ref: "./components/schemas/response.yaml#/DeleteHistorySetResponse"
+
+    ListHistoryRequest:
+      $ref: "./components/schemas/request.yaml#/ListHistoryRequest"
     ListHistoryResponse:
       $ref: "./components/schemas/response.yaml#/ListHistoryResponse"
+
+    HistorySetResults:
+      $ref: "./components/schemas/response.yaml#/HistorySetResults"
+    HistoryResults:
+      $ref: "./components/schemas/response.yaml#/HistoryResults"
+
+    CreateHistoryRequest:
+      $ref: "./components/schemas/request.yaml#/CreateHistoryRequest"
     CreateHistoryResponse:
       $ref: "./components/schemas/response.yaml#/CreateHistoryResponse"
+
     ErrorResponse:
       $ref: "./components/schemas/response.yaml#/ErrorResponse"
+    AuthenticationErrorResponse:
+      $ref: "./components/schemas/response.yaml#/AuthenticationErrorResponse"
+    ServerErrorResponse:
+      $ref: "./components/schemas/response.yaml#/ServerErrorResponse"
+
+    PaginatedResponseBase:
+      $ref: "./components/schemas/response.yaml#/PaginatedResponseBase"
 
   responses:
-    ErrorResponse:
-      $ref: "./components/schemas/response.yaml#/ErrorResponse"
+    NoContentResponse:
+      $ref: "./components/responses.yaml#/NoContentResponse"
+    ForbiddenResponse:
+      $ref: "./components/responses.yaml#/ForbiddenResponse"
+    UnauthorizedResponse:
+      $ref: "./components/responses.yaml#/UnauthorizedResponse"
+    BadRequestResponse:
+      $ref: "./components/responses.yaml#/BadRequestResponse"
+    InternalServerErrorResponse:
+      $ref: "./components/responses.yaml#/InternalServerErrorResponse"
 
   parameters:
     LimitParam:
@@ -82,9 +108,27 @@ components:
       $ref: "./components/parameters.yaml#/OffsetParam"
 
   examples:
-    RegisterExample:
-      $ref: "./components/examples.yaml#/RegisterExample"
-    LoginExample:
-      $ref: "./components/examples.yaml#/LoginExample"
-    TokenRefreshExample:
-      $ref: "./components/examples.yaml#/TokenRefreshExample"
+    RegisterRequestExample:
+      $ref: "./components/examples.yaml#/RegisterRequestExample"
+
+    LoginRequestExample:
+      $ref: "./components/examples.yaml#/LoginRequestExample"
+    LoginResponseExample:
+      $ref: "./components/examples.yaml#/LoginResponseExample"
+
+    TokenRefreshRequestExample:
+      $ref: "./components/examples.yaml#/TokenRefreshRequestExample"
+    TokenRefreshResponseExample:
+      $ref: "./components/examples.yaml#/TokenRefreshResponseExample"
+
+    CreateHistorySetRequestExample:
+      $ref: "./components/examples.yaml#/CreateHistorySetRequestExample"
+
+    BadRequestResponseExample:
+      $ref: "./components/examples.yaml#/BadRequestResponseExample"
+    UnauthorizedResponseExample:
+      $ref: "./components/examples.yaml#/UnauthorizedResponseExample"
+    ForbiddenResponseExample:
+      $ref: "./components/examples.yaml#/ForbiddenResponseExample"
+    ServerErrorResponseExample:
+      $ref: "./components/examples.yaml#/ServerErrorResponseExample"

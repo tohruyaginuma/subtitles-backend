@@ -1,16 +1,63 @@
-RegisterExample:
-  summary: Valid registration payload
+RegisterRequestExample:
+  summary: Valid registration request payload
   value:
     email: "user@example.com"
     password: "password123"
 
-LoginExample:
+LoginRequestExample:
   summary: Valid login payload
   value:
     email: "user@example.com"
     password: "password123"
 
-TokenRefreshExample:
+LoginResponseExample:
+  summary: Valid login response
+  value:
+    access: "eyJhbGciOiJIUzI1NiIs...ohfgSOcE93vTDEjGeuocxhLe9Ympw"
+    refresh: "eyJhbGciOiJIUzI1NiIs...ryBcZj19tbw9v80nL75a8CA61hI1uE"
+
+TokenRefreshResponseExample:
   summary: Valid token refresh payload
   value:
-    refresh_token: "1234567890"
+    refresh: "eyJhbGciOiJIUzI1NiIs...ryBcZj19tbw9v80nL75a8CA61hI1uE"
+
+TokenRefreshRequestExample:
+  summary: Valid token refresh request payload
+  value:
+    refresh: "eyJhbGciOiJIUzI1NiIs...ryBcZj19tbw9v80nL75a8CA61hI1uE"
+
+BadRequestResponseExample:
+  summary: Bad request response
+  value:
+    error:
+      code: "bad_request"
+      message: "Bad request"
+      details:
+        email:
+          - "This field is required."
+
+UnauthorizedResponseExample:
+  summary: Unauthorized response
+  value:
+    error:
+      code: "unauthorized"
+      message: "Unauthorized"
+
+ForbiddenResponseExample:
+  summary: Forbidden response
+  value:
+    error:
+      code: "forbidden"
+      message: "Forbidden"
+
+ServerErrorResponseExample:
+  summary: Server error response
+  value:
+    error:
+      code: "server_error"
+      message: "Internal server error"
+
+CreateHistorySetRequestExample:
+  summary: Valid create history set request payload
+  value:
+    title: "Subtitle of 2025-08-12 12:49:05"

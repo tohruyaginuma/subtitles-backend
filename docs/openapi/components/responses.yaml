@@ -1,0 +1,42 @@
+NoContentResponse:
+  description: No content response
+
+BadRequestResponse:
+  description: Bad request response
+  content:
+    application/json:
+      schema:
+        $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+      examples:
+        error:
+          $ref: "../openapi.yaml#/components/examples/BadRequestResponseExample"
+
+UnauthorizedResponse:
+  description: Unauthorized response
+  content:
+    application/json:
+      schema:
+        $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+      examples:
+        error:
+          $ref: "../openapi.yaml#/components/examples/UnauthorizedResponseExample"
+
+ForbiddenResponse:
+  description: Forbidden response
+  content:
+    application/json:
+      schema:
+        $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+      examples:
+        error:
+          $ref: "../openapi.yaml#/components/examples/ForbiddenResponseExample"
+
+InternalServerErrorResponse:
+  description: Internal server error response
+  content:
+    application/json:
+      schema:
+        $ref: "../openapi.yaml#/components/schemas/ServerErrorResponse"
+      examples:
+        error:
+          $ref: "../openapi.yaml#/components/examples/ServerErrorResponseExample"
