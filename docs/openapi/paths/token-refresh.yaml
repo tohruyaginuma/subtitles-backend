@@ -21,16 +21,16 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
     "401":
-      description: Unauthorized 
+      description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
     "500":
       description: Internal server error
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/TokenRefreshResponse"
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"

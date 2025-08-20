@@ -2,13 +2,33 @@ get:
   summary: Returns a list of history sets.
   description: Returns a list of history sets.
   parameters:
-    # - $ref: "../components/parameters.yaml#/components/parameters/LimitParam"
-    # - $ref: "../components/parameters.yaml#/components/parameters/OffsetParam"
-  # responses:
-  #   "200":
-  #     description: A JSON array of history sets
-  #     content:
-  #       application/json:
+    - $ref: "../openapi.yaml#/components/parameters/LimitParam"
+    - $ref: "../openapi.yaml#/components/parameters/OffsetParam"
+  responses:
+    "200":
+      description: A JSON array of history sets
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ListHistorySetResponse"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
 
 post:
   summary: Create a new history set.
@@ -18,10 +38,43 @@ post:
     content:
       application/json:
         schema:
+          $ref: "../openapi.yaml#/components/schemas/CreateHistorySetRequest"
+  responses:
+    "201":
+      description: History set created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/CreateHistorySetResponse"
 
-  # responses:
-  #   "200": # status code
-  #     description: A JSON array of user names
-  #     content:
-  #       application/json:
-  #         schema:
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"

@@ -2,9 +2,53 @@ get:
   summary: Returns a list of history.
   description: Returns a list of history.
   parameters:
-    # - $ref: "../components/parameters.yaml#/components/parameters/LimitParam"
-    # - $ref: "../components/parameters.yaml#/components/parameters/OffsetParam"
+    - $ref: "../openapi.yaml#/components/parameters/LimitParam"
+    - $ref: "../openapi.yaml#/components/parameters/OffsetParam"
 
 post:
   summary: Returns a list of history.
   description: Optional extended description in CommonMark or HTML.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/CreateHistoryRequest"
+  responses:
+    "201":
+      description: History created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/CreateHistoryResponse"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"

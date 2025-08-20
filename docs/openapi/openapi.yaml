@@ -28,6 +28,8 @@ components:
   schemas:
     RegisterRequest:
       $ref: "./components/schemas/request.yaml#/RegisterRequest"
+    RegisterResponse:
+      $ref: "./components/schemas/response.yaml#/RegisterResponse"
     LoginRequest:
       $ref: "./components/schemas/request.yaml#/LoginRequest"
     TokenRefreshRequest:
@@ -46,8 +48,6 @@ components:
       $ref: "./components/schemas/request.yaml#/ListHistoryRequest"
     CreateHistoryRequest:
       $ref: "./components/schemas/request.yaml#/CreateHistoryRequest"
-    RegisterResponse:
-      $ref: "./components/schemas/response.yaml#/RegisterResponse"
     LoginResponse:
       $ref: "./components/schemas/response.yaml#/LoginResponse"
     LoginErrorResponse:
@@ -68,6 +68,12 @@ components:
       $ref: "./components/schemas/response.yaml#/ListHistoryResponse"
     CreateHistoryResponse:
       $ref: "./components/schemas/response.yaml#/CreateHistoryResponse"
+    ErrorResponse:
+      $ref: "./components/schemas/response.yaml#/ErrorResponse"
+
+  responses:
+    ErrorResponse:
+      $ref: "./components/schemas/response.yaml#/ErrorResponse"
 
   parameters:
     LimitParam:

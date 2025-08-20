@@ -8,6 +8,7 @@ post:
         schema:
           $ref: "../openapi.yaml#/components/schemas/LoginRequest"
         examples:
+          $ref: "../openapi.yaml#/components/examples/LoginExample"
 
   responses:
     "200":
@@ -22,18 +23,17 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/LoginErrorResponse"
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
 
     "401":
       description: Invalid credentials
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/LoginErrorResponse"
-
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"
     "500":
       description: Internal server error
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/LoginErrorResponse"
+            $ref: "../openapi.yaml#/components/schemas/ErrorResponse"

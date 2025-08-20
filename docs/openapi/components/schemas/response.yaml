@@ -7,9 +7,13 @@ RegisterResponse:
     refresh_token:
       type: string
       example: "1234567890"
-    expires_in:
-      type: integer
-      example: 3600
+
+ErrorResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "User already exists"
 
 LoginResponse:
   type: object
