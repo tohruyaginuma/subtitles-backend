@@ -161,6 +161,7 @@ HistoryResults:
     created_at:
       type: string
     updated_at:
+      type: string
 
 HealthCheckResponse:
   type: object
