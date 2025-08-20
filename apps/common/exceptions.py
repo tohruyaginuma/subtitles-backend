@@ -1,6 +1,9 @@
 from rest_framework.views import exception_handler as drf_exception_handler
 from rest_framework.response import Response
 from .constants.error_codes import ERROR_CODE
+from rest_framework import status
+from django.conf import settings
+import traceback
 
 def exception_handler(exc, context):
     response = drf_exception_handler(exc, context)
@@ -10,8 +13,8 @@ def exception_handler(exc, context):
         flat_msg = None
         if isinstance(details, dict):
             first_value = next(iter(details.values()))
-            if isinstance(first_value, list) and first_value:
-                flat_msg = str(first_value[0])
+            if isinstance(first_value, list):
+                flat_msg = "; ".join(str(v) for v in first_value)
             else:
                 flat_msg = str(first_value)
         else:
@@ -25,12 +28,16 @@ def exception_handler(exc, context):
             }
         }
     else:
+        error_code, status_code = ERROR_CODE.get(
+            Exception, ("server_error", status.HTTP_500_INTERNAL_SERVER_ERROR)
+        )
+
         response = Response({
             "error": {
-                "code": "server_error",
-                "message": str(exc),
-                "details": None
+                "code": error_code,
+                "message": str(exc) if settings.DEBUG else "Internal server error",
+                "details":  traceback.format_exc() if settings.DEBUG else None
             }
-        }, status=ERROR_CODE[Exception][1])
+        }, status=status_code)
 
     return response

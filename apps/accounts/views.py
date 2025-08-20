@@ -12,8 +12,8 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return created({"user_id": user.id})
+        serializer.save()
+        return created()
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     permission_classes = [AllowAny]
